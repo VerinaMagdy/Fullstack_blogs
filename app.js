@@ -2,8 +2,8 @@
 const express = require('express');
 const morgan = require('morgan');//3rd party
 const mongoose = require('mongoose'); 
-
 const blogRoutes = require('./routes/blogRoutes');
+const translateRoutes = require('./routes/translateRoutes');
 
 
 // express app
@@ -15,8 +15,6 @@ mongoose.connect(dbURI,{ useNewUrlParser: true, useUnifiedTopology: true })
 .then(result =>app.listen(3000))
   .catch(err => console.log(err)); 
 
-
-
  
 // register view engine
 app.set('view engine', 'ejs');
@@ -27,47 +25,11 @@ app.use(express.static('public'));//public is a folder name
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-// app.use((req, res, next) => {
-//   res.locals.path = req.path;
-//   next();
-// });
-
-// mongoose & mongo tests
-app.get('/add-blog', (req, res) => {
-  const blog = new Blog({
-    title: 'new blog2',
-    snippet: 'about my new blog',
-    body: 'more about my new blog'
-  });
-
-  blog.save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+app.use((req, res, next) => {
+  res.locals.path = req.path;
+  next();
 });
 
-app.get('/all-blogs', (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-app.get('/single-blog', (req, res) => {
-  Blog.findById('612d68aed647b8147480993c')
-    .then((result) => {
-      res.send(result)
-    })
-    .catch(err => {
-      console.log(err);
-    });
-})
 
 //routes
 app.get('/', (req, res) => {
@@ -90,6 +52,9 @@ app.get('/about', (req, res) => {
 
 //blog routes
 app.use('/blogs',blogRoutes)
+
+//new route
+app.use('/translate',translateRoutes)
 
 // 404 page
 app.use((req, res) => {
