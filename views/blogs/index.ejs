@@ -1,9 +1,26 @@
 <!-- <% used for dynamic data -->
 <html lang="en">
-  <%- include("../partials/head.ejs") %>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Ninja | </title>
+    <link rel="stylesheet" href="/styles.css">
+    
+  </head>
 <body>
   
-  <%- include("../partials/nav.ejs") %>
+  <nav>
+    <div class="site-title">
+      <a href="/"><h1>Blog Ninja</h1></a>
+      <p>A Net Ninja Site</p>
+    </div>
+    <ul>
+      <li><a href="/">Blogs</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/blogs/create">New Blog</a></li>
+      <li><a href="/translate">Translate</a></li>
+    </ul>
+  </nav>
 <div class="blogs content">
   <h2>All Blogs</h2>
   <% if (blogs.length > 0) { %> 
@@ -17,7 +34,9 @@
     <p>There are no blogs to display...</p>
   <% } %>
 </div>
-<%- include("../partials/footer.ejs") %>
+<footer>
+  Copyright &copy; Verina Magdy
+</footer>
 
 </body>
 </html>
